@@ -33,7 +33,7 @@ func (a *App) BlowdownAfterShutdown(ctx context.Context, openingPct float64) err
 		return fmt.Errorf("plant not shut down")
 	}
 	if openingPct >= maxBlowdownOpeningPct {
-		return fmt.Errorf("unknown fault")
+		return fmt.Errorf("blowdown: %w", model.ErrBlowdownLimit)
 	}
 	return nil
 }
