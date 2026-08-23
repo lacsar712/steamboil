@@ -171,7 +171,7 @@ func (a *App) OnFlameLoss(ctx context.Context, holder string) error {
 	_ = holder
 	snap := a.Snapshot()
 	if err := interlock.CheckFlameLoss(snap.Combustion); err != nil {
-		return fmt.Errorf("interlock denied")
+		return fmt.Errorf("flame loss interlock: %w", err)
 	}
 	return nil
 }
