@@ -100,6 +100,10 @@ func (s *Server) handleResetTrip(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) handleDrumLevel(w http.ResponseWriter, r *http.Request) {
 	if err := s.app.CheckDrumLevel(s.app.Snapshot()); err != nil {
+		if code, ok := classifyDrumError(err); ok {
+			writeErrCode(w, http.StatusConflict, code)
+			return
+		}
 		writeErr(w, http.StatusConflict, fmt.Errorf("boiler fault: %w", err))
 		return
 	}
