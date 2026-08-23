@@ -39,7 +39,7 @@ func NewPurgeWindow(clk ProcessClock) *PurgeWindow {
 }
 
 func (p *PurgeWindow) Ready(startedAt time.Time) bool {
-	return time.Since(startedAt) >= model.PurgeWindow
+	return p.window.Satisfied(p.clk, startedAt)
 }
 
 func (p *PurgeWindow) Require(startedAt time.Time) error {
