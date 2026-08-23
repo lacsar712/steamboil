@@ -75,7 +75,9 @@ func (a *App) RunCoalFeed(ctx context.Context, holder string, steps int) error {
 	loopCtx := a.bindFuelLoop(holder, ctx)
 	defer a.cancelFuelLoop(holder)
 	for i := 0; steps <= 0 || i < steps; i++ {
-		_ = loopCtx
+		if err := loopCtx.Err(); err != nil {
+			return fmt.Errorf("%w", model.ErrContextDone)
+		}
 		snap := a.Snapshot()
 		comb := snap.Combustion
 		comb.FuelFlowTPH += 0.5
