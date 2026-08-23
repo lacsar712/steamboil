@@ -16,7 +16,10 @@ func (a *App) RunWarmupBurnScheduler(ctx context.Context, ignitionAt time.Time) 
 	if err != nil {
 		return err
 	}
-	return a.scheduler.InstallBurnPlanCtx(context.Background(), snap.Settings, "warmup-burn")
+	// Propagate the caller's context so an operator withdrawing the warmup
+	// arrangement cancels the burn-plan installation instead of letting the
+	// subsequent ignition steps keep loading into the backend schedule.
+	return a.scheduler.InstallBurnPlanCtx(ctx, snap.Settings, "warmup-burn")
 }
 
 func (a *App) SchedulerItemCount() int {
