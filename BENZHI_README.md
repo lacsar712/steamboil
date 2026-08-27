@@ -1,6 +1,6 @@
-# HookRelay
+# steamboil
 
-Signed ingress + reliable outbound webhook delivery (retry, circuit breaker, rate limit, DLQ, replay).
+steamboil 是一套电厂锅炉汽包与燃烧协调工业过程控制系统，用于汽包水位、燃烧与嵌入式 HMI。
 
 ## Requirements
 
